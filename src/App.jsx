@@ -1,16 +1,96 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { motion, AnimatePresence } from "framer-motion";
 
-import logo from './assets/logo.webp';
+import logo from "./assets/logo.webp";
 
 // --- آیکون‌ها ---
-const UserIcon = (props) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>;
-const DocumentIcon = (props) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>;
-const CheckCircleIcon = (props) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
-const SpinnerIcon = () => <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>;
-const UploadIcon = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>;
-
+const UserIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    {...props}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+    />
+  </svg>
+);
+const DocumentIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    {...props}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+    />
+  </svg>
+);
+const CheckCircleIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    {...props}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+);
+const SpinnerIcon = () => (
+  <svg
+    className="animate-spin h-5 w-5 text-white"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+  >
+    <circle
+      className="opacity-25"
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      strokeWidth="4"
+    ></circle>
+    <path
+      className="opacity-75"
+      fill="currentColor"
+      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+    ></path>
+  </svg>
+);
+const UploadIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-10 w-10 mx-auto text-gray-400"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={1}
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+    />
+  </svg>
+);
 
 function App() {
   const [step, setStep] = useState(1);
@@ -30,7 +110,7 @@ function App() {
   const [errors, setErrors] = useState({});
   const [submissionResult, setSubmissionResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [submissionError, setSubmissionError] = useState('');
+  const [submissionError, setSubmissionError] = useState("");
 
   const MAX_FILE_SIZE = 3 * 1024 * 1024;
 
@@ -44,82 +124,118 @@ function App() {
     const { name, files: selectedFiles } = e.target;
     if (selectedFiles && selectedFiles[0]) {
       const file = selectedFiles[0];
-      setFiles((prev) => ({ ...prev, [name]: { file, preview: URL.createObjectURL(file) } }));
+      setFiles((prev) => ({
+        ...prev,
+        [name]: { file, preview: URL.createObjectURL(file) },
+      }));
       if (errors[name]) setErrors((prev) => ({ ...prev, [name]: null }));
     }
   };
 
   useEffect(() => {
-    return () => { Object.values(files).forEach(item => { if (item.preview) URL.revokeObjectURL(item.preview); }); };
+    return () => {
+      Object.values(files).forEach((item) => {
+        if (item.preview) URL.revokeObjectURL(item.preview);
+      });
+    };
   }, [files]);
 
   const validateStep = () => {
     const newErrors = {};
     if (step === 1) {
-      if (!formData.firstName) newErrors.firstName = "وارد کردن نام الزامی است.";
-      if (!formData.lastName) newErrors.lastName = "وارد کردن نام خانوادگی الزامی است.";
-      if (!formData.nationalId) newErrors.nationalId = "وارد کردن کد ملی الزامی است.";
-      else if (!/^\d{10}$/.test(formData.nationalId)) newErrors.nationalId = "کد ملی باید ۱۰ رقم باشد.";
-      if (!formData.passportNumber) newErrors.passportNumber = "وارد کردن شماره پاسپورت الزامی است.";
-      if (!formData.phoneNumber) newErrors.phoneNumber = "وارد کردن شماره تلفن همراه الزامی است.";
-      else if (!/^09\d{9}$/.test(formData.phoneNumber)) newErrors.phoneNumber = "فرمت شماره تلفن همراه صحیح نیست.";
-      if (!formData.accountNumber) newErrors.accountNumber = "وارد کردن شماره حساب بانکی الزامی است.";
-      else if (!/^\d{5,20}$/.test(formData.accountNumber)) newErrors.accountNumber = "شماره حساب بانکی باید بین ۵ تا ۲۰ رقم باشد.";
+      if (!formData.firstName)
+        newErrors.firstName = "وارد کردن نام الزامی است.";
+      if (!formData.lastName)
+        newErrors.lastName = "وارد کردن نام خانوادگی الزامی است.";
+      if (!formData.nationalId)
+        newErrors.nationalId = "وارد کردن کد ملی الزامی است.";
+      else if (!/^\d{10}$/.test(formData.nationalId))
+        newErrors.nationalId = "کد ملی باید ۱۰ رقم باشد.";
+      if (!formData.passportNumber)
+        newErrors.passportNumber = "وارد کردن شماره پاسپورت الزامی است.";
+      if (!formData.phoneNumber)
+        newErrors.phoneNumber = "وارد کردن شماره تلفن همراه الزامی است.";
+      else if (!/^09\d{9}$/.test(formData.phoneNumber))
+        newErrors.phoneNumber = "فرمت شماره تلفن همراه صحیح نیست.";
+      if (!formData.accountNumber)
+        newErrors.accountNumber = "وارد کردن شماره شبا بانکی الزامی است.";
+      else if (!/^\d{5,30}$/.test(formData.accountNumber))
+        newErrors.accountNumber = "شماره شبا بانکی باید بین ۵ تا ۳۰ رقم باشد.";
     }
     if (step === 2) {
-      Object.keys(files).forEach(key => {
-        const labels = { householdDecileImage: 'دهک خانوار', passportImage: 'پاسپورت', sajamImage: 'سماح' };
-        if (!files[key].file) newErrors[key] = `انتخاب تصویر ${labels[key]} الزامی است.`;
-        else if (files[key].file.size > MAX_FILE_SIZE) newErrors[key] = "حجم فایل نباید بیشتر از ۳ مگابایت باشد.";
+      Object.keys(files).forEach((key) => {
+        const labels = {
+          householdDecileImage: "دهک خانوار",
+          passportImage: "پاسپورت",
+          sajamImage: "سماح",
+        };
+        if (!files[key].file)
+          newErrors[key] = `انتخاب تصویر ${labels[key]} الزامی است.`;
+        else if (files[key].file.size > MAX_FILE_SIZE)
+          newErrors[key] = "حجم فایل نباید بیشتر از ۳ مگابایت باشد.";
       });
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const nextStep = () => { if (validateStep()) { setStep(s => s + 1); } };
-  const prevStep = () => { setStep(s => s - 1); };
+  const nextStep = () => {
+    if (validateStep()) {
+      setStep((s) => s + 1);
+    }
+  };
+  const prevStep = () => {
+    setStep((s) => s - 1);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateStep()) return;
-    
+
     setIsLoading(true);
-    setSubmissionError('');
+    setSubmissionError("");
 
     const dataToSubmit = new FormData();
-    Object.keys(formData).forEach(key => dataToSubmit.append(key, formData[key]));
-    Object.keys(files).forEach(key => { if (files[key].file) dataToSubmit.append(key, files[key].file); });
+    Object.keys(formData).forEach((key) =>
+      dataToSubmit.append(key, formData[key])
+    );
+    Object.keys(files).forEach((key) => {
+      if (files[key].file) dataToSubmit.append(key, files[key].file);
+    });
 
     try {
-      const response = await axios.post('https://api.forisarasari.ir/api/winners/create', dataToSubmit);
+      const response = await axios.post(
+        "https://api.forisarasari.ir/api/winners/create",
+        dataToSubmit
+      );
       if (response.data) setSubmissionResult(response.data);
     } catch (error) {
-      let errorMessage = 'خطا در ارتباط با سرور. لطفاً شبکه خود را بررسی کرده و دوباره تلاش کنید.'; // Default message
+      let errorMessage =
+        "خطا در ارتباط با سرور. لطفاً شبکه خود را بررسی کرده و دوباره تلاش کنید."; // Default message
 
       if (error.response && error.response.data) {
         const errorData = error.response.data;
         // Case 1: Server sends a plain string (like your "BadRequest("message")")
-        if (typeof errorData === 'string') {
+        if (typeof errorData === "string") {
           errorMessage = errorData;
-        } 
+        }
         // Case 2: Server sends a validation problem details object (default for ModelState errors)
         else if (errorData.errors) {
           const messages = Object.values(errorData.errors).flat();
           if (messages.length > 0) {
-            errorMessage = messages.join(' ');
+            errorMessage = messages.join(" ");
           }
         }
         // Case 3: Server sends a simple JSON object with a 'message' or 'title' property
         else if (errorData.message) {
-            errorMessage = errorData.message;
+          errorMessage = errorData.message;
         } else if (errorData.title) {
-            errorMessage = errorData.title;
+          errorMessage = errorData.title;
         }
       }
-      
+
       setSubmissionError(errorMessage);
-      console.error('Submission error:', error.response?.data || error.message);
+      console.error("Submission error:", error.response?.data || error.message);
     } finally {
       setIsLoading(false);
     }
@@ -127,34 +243,95 @@ function App() {
 
   const renderInputField = (name, label, type = "text") => (
     <div>
-      <label htmlFor={name} className="block mb-2 text-sm font-medium text-gray-700 text-right">{label}</label>
-      <input type={type} id={name} name={name} value={formData[name]} onChange={handleInputChange} className={`bg-gray-50 border ${errors[name] ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300'} text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-3 text-right transition-all duration-300`} />
-      <AnimatePresence>{errors[name] && <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-2 text-sm text-red-600 text-right">{errors[name]}</motion.p>}</AnimatePresence>
+      <label
+        htmlFor={name}
+        className="block mb-2 text-sm font-medium text-gray-700 text-right"
+      >
+        {label}
+      </label>
+      <input
+        type={type}
+        id={name}
+        name={name}
+        value={formData[name]}
+        onChange={handleInputChange}
+        className={`bg-gray-50 border ${
+          errors[name]
+            ? "border-red-500 ring-1 ring-red-500"
+            : "border-gray-300"
+        } text-gray-900 text-sm rounded-lg focus:ring-teal-500 focus:border-teal-500 block w-full p-3 text-right transition-all duration-300`}
+      />
+      <AnimatePresence>
+        {errors[name] && (
+          <motion.p
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mt-2 text-sm text-red-600 text-right"
+          >
+            {errors[name]}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 
   const renderFileInput = (name, label) => (
     <div className="col-span-1">
-      <label className="block mb-2 text-sm font-medium text-gray-700 text-right">{label}</label>
-      <div className={`relative border-2 ${errors[name] ? 'border-red-500' : 'border-gray-300'} border-dashed rounded-lg p-4 text-center group hover:border-teal-500 transition-all duration-300 h-40 flex items-center justify-center`}>
-        {files[name].preview ? <img src={files[name].preview} alt="Preview" className="w-full h-full object-cover rounded-md" /> : <div className="flex flex-col items-center"><UploadIcon /><p className="text-xs text-gray-500 mt-2">انتخاب فایل</p></div>}
-        <input type="file" name={name} onChange={handleFileChange} accept="image/*" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" />
+      <label className="block mb-2 text-sm font-medium text-gray-700 text-right">
+        {label}
+      </label>
+      <div
+        className={`relative border-2 ${
+          errors[name] ? "border-red-500" : "border-gray-300"
+        } border-dashed rounded-lg p-4 text-center group hover:border-teal-500 transition-all duration-300 h-40 flex items-center justify-center`}
+      >
+        {files[name].preview ? (
+          <img
+            src={files[name].preview}
+            alt="Preview"
+            className="w-full h-full object-cover rounded-md"
+          />
+        ) : (
+          <div className="flex flex-col items-center">
+            <UploadIcon />
+            <p className="text-xs text-gray-500 mt-2">انتخاب فایل</p>
+          </div>
+        )}
+        <input
+          type="file"
+          name={name}
+          onChange={handleFileChange}
+          accept="image/*"
+          className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+        />
       </div>
-      <AnimatePresence>{errors[name] && <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-2 text-sm text-red-600 text-right">{errors[name]}</motion.p>}</AnimatePresence>
+      <AnimatePresence>
+        {errors[name] && (
+          <motion.p
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="mt-2 text-sm text-red-600 text-right"
+          >
+            {errors[name]}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 
   const steps = [
-    { number: 1, title: 'اطلاعات فردی', icon: UserIcon },
-    { number: 2, title: 'بارگذاری مدارک', icon: DocumentIcon },
-    { number: 3, title: 'تایید نهایی', icon: CheckCircleIcon },
+    { number: 1, title: "اطلاعات فردی", icon: UserIcon },
+    { number: 2, title: "بارگذاری مدارک", icon: DocumentIcon },
+    { number: 3, title: "تایید نهایی", icon: CheckCircleIcon },
   ];
 
   const slideAnimation = {
     initial: { x: 300, opacity: 0 },
     animate: { x: 0, opacity: 1 },
     exit: { x: -300, opacity: 0 },
-    transition: { type: 'spring', stiffness: 300, damping: 30 }
+    transition: { type: "spring", stiffness: 300, damping: 30 },
   };
 
   return (
@@ -229,7 +406,7 @@ function App() {
                       )}
                       {renderInputField(
                         "accountNumber",
-                        "شماره حساب بانکی",
+                        "شماره شبا بانکی",
                         "text"
                       )}
                     </div>
